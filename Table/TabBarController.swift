@@ -9,20 +9,20 @@ import UIKit
 
 final class TabBarController: UITabBarController {
 
-    let vcTable1 = Table1()
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tabBar.backgroundColor = .systemBackground
 
-        let ncTable1: UINavigationController = {
-            $0.setViewControllers([vcTable1], animated: true)
-            $0.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(systemName: "tablecells"), tag: 0)
-            return $0
-        }(UINavigationController())
+        var vc: Array<UIViewController> = []
+        var nc: Array<UINavigationController> = []
 
-        viewControllers = [ncTable1]
-        selectedIndex = 0
+        vc = [VC0(), VC1(), VC2()]
+
+        vc.forEach{nc.append(UINavigationController(rootViewController: $0))}
+        for i in 0..<nc.count {nc[i].tabBarItem = UITabBarItem(title: String(i), image: UIImage(systemName: "tablecells"), tag: 0)}
+        viewControllers = nc
+
+        selectedIndex = 2
     }
 }
