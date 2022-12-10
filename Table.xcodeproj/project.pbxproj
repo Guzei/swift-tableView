@@ -47,6 +47,7 @@
 		4E7EE4572943717500D67653 = {
 			isa = PBXGroup;
 			children = (
+				4E7EE480294489CB00D67653 /* README.md */,
 				4E7EE4622943717500D67653 /* Table */,
 				4E7EE4612943717500D67653 /* Products */,
 			);
@@ -69,7 +70,6 @@
 				4E7EE46C2943717600D67653 /* Assets.xcassets */,
 				4E7EE46E2943717600D67653 /* LaunchScreen.storyboard */,
 				4E7EE4712943717600D67653 /* Info.plist */,
-				4E7EE480294489CB00D67653 /* README.md */,
 			);
 			path = Table;
 			sourceTree = "<group>";
