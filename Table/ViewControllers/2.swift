@@ -9,19 +9,20 @@ import UIKit
 
 final class VC2: UIViewController {
 
+    let table2 = UITableView()
+
     let tableData = ["content configuration",
                      ".register -> UITableViewCell.self",
-                     "min Header & Footre",
+                     "no Header",
+                     "no Footre",
     ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Table with data"
-        view.backgroundColor = .systemYellow
-
-        let table2 = UITableView()
         view.addSubview(table2)
-        table2.backgroundColor = .systemGray5
+        view.backgroundColor = .systemYellow
+        navigationItem.title = "Table with data"
+
         table2.dataSource = self
         table2.register(UITableViewCell.self, forCellReuseIdentifier: "i1")     // Registers a class to use in creating new table cells
         table2.translatesAutoresizingMaskIntoConstraints = false
@@ -47,12 +48,5 @@ extension VC2: UITableViewDataSource {
         cell.contentConfiguration = content
 
         return cell
-    }
-
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Header"
-    }
-    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return "Footer"
     }
 }

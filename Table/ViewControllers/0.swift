@@ -8,14 +8,15 @@
 import UIKit
 
 final class VC0: UIViewController {
+
+    let table0 = UITableView()                                                  // make Table
+
     override func viewDidLoad() {                                               // called after the view controller has loaded its view hierarchy into memory
         super.viewDidLoad()
-        navigationItem.title = "Table min-min"
-        view.backgroundColor = .systemYellow                                    // view controller color
-
-        let table0 = UITableView()                                              // make Table
         view.addSubview(table0)                                                 // add table into view controller
-        table0.backgroundColor = .systemGray5                                   // table color
+        view.backgroundColor = .systemYellow                                    // view controller color
+        navigationItem.title = "deprecated .textLabel"
+
         table0.dataSource = self
         table0.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -29,12 +30,14 @@ final class VC0: UIViewController {
 
 extension VC0: UITableViewDataSource {
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {1}
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {16}
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()                                            // cell for table
-        cell.backgroundColor = .cyan                                            // cell color
-        cell.textLabel!.text = "one cell with deprecated property .textLabel"
+
+        let cell = UITableViewCell()
+        cell.backgroundColor = .cyan
+        cell.textLabel!.text = "Row \(indexPath.row)"
+
         return cell
     }
 }
