@@ -9,7 +9,7 @@
 1. * var content = cell.defaultContentConfiguration() 
    * cell.defaultContentConfiguration()
    * cell.contentConfiguration = content
-2. + tableData
+2. tableData
 3. delegate
 4. data + delegate
 
