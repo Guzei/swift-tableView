@@ -39,7 +39,7 @@ extension VC3: UITableViewDataSource {
         let cell = UITableViewCell()
         cell.backgroundColor = .cyan
         var content = cell.defaultContentConfiguration()
-        content.text = "Row \(indexPath)"
+        content.text = "Row \(indexPath). Click me."
         cell.contentConfiguration = content
 
         return cell

@@ -9,60 +9,110 @@ import UIKit
 
 final class VC4: UIViewController {
 
-    let table4 = UITableView()
+    let postIdentifier = "post"
 
-    let tableData = ["content configuration",
-                     ".register -> UITableViewCell.self",
-                     "no Header",
-                     "no Footre",
-                     "delegate",
-    ]
+    private lazy var table4: UITableView = {
+        $0.backgroundColor = .systemGray5
+        $0.dataSource = self
+        $0.register(Cell.self, forCellReuseIdentifier: postIdentifier)
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        return $0
+    }(UITableView(frame: .zero, style: .grouped))
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(table4)
         view.backgroundColor = .systemYellow
-        navigationItem.title = "data & delegate"
-
-        table4.dataSource = self
-        table4.delegate = self
-        table4.register(UITableViewCell.self, forCellReuseIdentifier: "i1")     // Registers a class to use in creating new table cells
-        table4.translatesAutoresizingMaskIntoConstraints = false
+        navigationItem.title = "external data"
         NSLayoutConstraint.activate([
-            table4.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            table4.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            table4.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            table4.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            table4.topAnchor.constraint(equalTo: view.topAnchor),
+            table4.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            table4.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            table4.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
 }
 
 extension VC4: UITableViewDataSource {
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {tableData.count}
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { posts.count }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath ) -> UITableViewCell {
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: "i1", for: indexPath)
-        cell.backgroundColor = .cyan
-        var content = cell.defaultContentConfiguration()
-        content.text = tableData[indexPath.row]
-        cell.contentConfiguration = content
-
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: postIdentifier, for: indexPath) as? Cell else { fatalError() }
+        cell.config(post: posts[indexPath.row])
         return cell
     }
 }
 
-extension VC4: UITableViewDelegate {
+final class Cell: UITableViewCell {
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = table4.cellForRow(at: indexPath) {
-            cell.backgroundColor = cell.backgroundColor == .cyan ? .systemYellow : .cyan
-            var content = cell.defaultContentConfiguration()
-            content.text = tableData[indexPath.row]
-            content.secondaryText = String(indexPath.row)
-            cell.contentConfiguration = content
-        }
-        tableView.deselectRow(at: indexPath, animated: true)
+    private lazy var cellAuthor: UILabel = {
+        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 20)
+        label.textColor = .black
+        label.numberOfLines = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private lazy var cellImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .black
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+
+    private lazy var cellDescription: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .systemGray
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        addSubviews()
+        setConstraints()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func addSubviews() {
+        contentView.addSubview(cellAuthor)
+        contentView.addSubview(cellImage)
+        contentView.addSubview(cellDescription)
+    }
+
+    let pagePadding = 16.0
+
+    private func setConstraints() {
+        NSLayoutConstraint.activate([
+
+            cellAuthor.topAnchor.constraint(equalTo: contentView.topAnchor, constant: pagePadding),
+            cellAuthor.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: pagePadding),
+            cellAuthor.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -pagePadding),
+
+            cellImage.topAnchor.constraint(equalTo: cellAuthor.bottomAnchor, constant: pagePadding),
+            cellImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            cellImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            cellImage.heightAnchor.constraint(equalTo: cellImage.widthAnchor),
+
+            cellDescription.topAnchor.constraint(equalTo: cellImage.bottomAnchor, constant: pagePadding),
+            cellDescription.leadingAnchor.constraint(equalTo: cellAuthor.leadingAnchor),
+            cellDescription.trailingAnchor.constraint(equalTo: cellAuthor.trailingAnchor),
+            cellDescription.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,  constant: -pagePadding),
+        ])
+    }
+
+    func config(post: Post) {
+
+        cellAuthor.text = post.author
+        cellImage.image = UIImage(named: post.image)
+        cellDescription.text = post.description
     }
 }

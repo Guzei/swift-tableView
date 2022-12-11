@@ -11,7 +11,7 @@
    * cell.contentConfiguration = content
 2. tableData
 3. delegate
-4. data + delegate
+4. extra format and header
 
 
 >    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {16}
