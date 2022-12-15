@@ -40,6 +40,7 @@ extension VC3: UITableViewDataSource {
         cell.backgroundColor = .cyan
         var content = cell.defaultContentConfiguration()
         content.text = "Row \(indexPath). Click me."
+        if indexPath.row == 1 {content.image = UIImage(named: "1")}
         cell.contentConfiguration = content
 
         return cell
@@ -47,12 +48,13 @@ extension VC3: UITableViewDataSource {
 }
 
 extension VC3: UITableViewDelegate {
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = table3.cellForRow(at: indexPath) {
             cell.backgroundColor = cell.backgroundColor == .cyan ? .systemYellow : .cyan
             var content = cell.defaultContentConfiguration()
             content.text = "Row \(indexPath)"
+            if indexPath.row == 2 {content.image = UIImage(named: "2")}
             content.secondaryText = String(indexPath.row)
             cell.contentConfiguration = content
         }

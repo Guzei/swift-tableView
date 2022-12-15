@@ -15,6 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
 
         let viewController: Array<UIViewController> = [VC0(), VC1(), VC2(), VC3(), VC4()]
+        
         var navigationController: Array<UINavigationController> = []
         for i in 0 ..< viewController.count {
             navigationController.append(UINavigationController(rootViewController: viewController[i]))
